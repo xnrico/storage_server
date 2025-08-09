@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 3.22)
 project(storage_server)
 
 find_package(libevent REQUIRED)
+find_package(libjsoncpp REQUIRED)
+find_package(libbundle REQUIRED)
 
 set(CXX_STANDARD_REQUIRED true)
 set(CMAKE_C_STANDARD 99)
