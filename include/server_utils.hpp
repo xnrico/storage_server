@@ -23,8 +23,8 @@ class file_util final {
 	auto read_content(std::string& content, size_t pos, size_t len) const -> bool;	// reads part of file
 	auto write_file(const std::string& content) const -> bool;						// writes entire content buffer
 	auto write_content(const std::string& content, size_t len) const -> bool;		// writes part of content buffer
-	auto compress(const std::string& content, int format) -> bool;
-	auto decompress(const std::string& download_path) -> bool;
+	auto compress(const std::string& content, int format) const -> bool;
+	auto decompress(const std::string& download_path) const -> bool;
 
 	auto exists() const -> bool;
 	auto create_directory() const -> bool;

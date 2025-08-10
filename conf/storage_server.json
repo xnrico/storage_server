@@ -1,0 +1,9 @@
+{
+    "server_port" : 8081,
+    "server_ip" : "127.0.0.1", 
+    "download_url_prefix" : "/downloads", 
+    "cold_storage_path" : "./storage/cold",   
+    "hot_storage_path" : "./storage/hot", 
+    "bundle_type" : 4,
+    "storage_info" : "./default_storage"
+}

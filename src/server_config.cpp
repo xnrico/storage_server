@@ -1,4 +1,5 @@
 #include "server_config.hpp"
+#include "server_utils.hpp"
 #include "logger.hpp"
 
 namespace ricox {
@@ -21,10 +22,30 @@ auto server_config::get_instance() -> server_config& {
 
 auto server_config::load_config() -> bool {
     // Load configuration from file
-	common::get_logger("server_logger")->info("Loading server configuration from {}", CONFIG_FILE);
-	
+	common::INFO("server_logger", "Loading server configuration from {}", CONFIG_FILE);
+    auto file = file_util{CONFIG_FILE};
+    auto content = std::string{};
+    if (!file.read_file(content)) {
+        common::ERROR("server_logger", "Failed to read configuration file {}", CONFIG_FILE);
+        return false;
+    }
 
-	return true;
+    auto root = Json::Value{};
+    if (!json_util::deserialize(root, content)) {
+        common::ERROR("server_logger", "Failed to parse JSON from configuration file {}", CONFIG_FILE);
+        return false;
+    }
+
+    // Extract values from the JSON object
+    server_port = root.get("server_port", 8081).asInt();
+    server_ip = root.get("server_ip", "127.0.0.1").asString();
+    download_url_prefix = root.get("download_url_prefix", "/downloads").asString();
+    cold_storage_path = root.get("cold_storage_path", "./storage/cold").asString();
+    hot_storage_path = root.get("hot_storage_path", "./storage/hot").asString();
+    storage_info = root.get("storage_info", "./default_storage").asString();
+    bundle_type = root.get("bundle_type", 4).asInt();  // Default to 4 if not specified
+
+    return true;
 }
 
 auto server_config::get_server_port() const -> int { return server_port; }
