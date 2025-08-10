@@ -30,6 +30,11 @@ auto storage_info::load_info(const std::string& path) -> bool {
 
 data_manager::data_manager() : storage_file{server_config::get_instance().get_storage_info()}, is_cold_storage{false} {}
 
+auto data_manager::get_instance() -> data_manager& {
+	static auto instance = data_manager{};
+	return instance;
+}
+
 auto data_manager::add_info(const storage_info& info) -> bool {
 	auto lock = std::unique_lock{mutex};
 	storage_map.try_emplace(info.file_url, info);

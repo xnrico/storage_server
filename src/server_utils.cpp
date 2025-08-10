@@ -12,28 +12,6 @@
 #include <vector>
 
 namespace ricox {
-static auto to_hex(uint8_t x) -> uint8_t { return x + (x < 10 ? '0' : 'a' - 10); }
-
-static auto from_hex(uint8_t x) -> uint8_t {
-	return x - (x <= '9' ? '0' : (x >= 'a' ? 'a' - 10 : (x >= 'A' ? 'A' - 10 : 0)));
-}
-
-static auto url_decode(const std::string& str) -> std::string {
-	auto result = std::string{};
-	result.reserve(str.size());
-
-	for (auto i = 0; i < str.size(); ++i) {
-		if (str[i] == '%' && i + 2 < str.size() && isxdigit(str[i + 1]) && isxdigit(str[i + 2])) {
-			result += static_cast<char>((from_hex(str[i + 1]) << 4) | from_hex(str[i + 2]));
-			i += 2;
-		} else if (str[i] == '+')
-			result += ' ';
-		else
-			result += str[i];
-	}
-	return result;
-}
-
 auto file_util::get_file_name() const -> const std::string {
 	auto pos = file_name.find_last_of("/");
 	if (pos != std::string::npos) return file_name.substr(pos + 1);

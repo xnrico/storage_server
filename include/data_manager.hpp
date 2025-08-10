@@ -26,18 +26,21 @@ class data_manager final {
     mutable std::shared_mutex mutex;
     bool is_cold_storage;
 
-    auto add_info(const storage_info& info) -> bool;
+    
     auto store_info() -> bool;
 
-   public:
-	data_manager();
+    data_manager();
 	~data_manager() = default;
 
     data_manager(const data_manager&) = delete;
     data_manager& operator=(const data_manager&) = delete;
 
+   public:
+    static auto get_instance() -> data_manager&; // singleton class object retriever
+
 	auto initialize() -> bool;
     auto update(const storage_info& info) -> bool;
+    auto add_info(const storage_info& info) -> bool;
     auto find_by_url(const std::string& url, storage_info& info) const -> bool;
     auto find_by_path(const std::string& path, storage_info& info) const -> bool;
     auto find_all(std::vector<storage_info>& infos) const -> bool;
