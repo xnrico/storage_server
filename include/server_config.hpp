@@ -5,7 +5,7 @@
 #include <string>
 
 namespace ricox {
-static constexpr char* CONFIG_FILE = "../conf/storage_server.json";
+static constexpr const char* CONFIG_FILE = "../conf/storage_server.json";
 
 class server_config final {	 // Singleton class to manage server configuration
    private:
